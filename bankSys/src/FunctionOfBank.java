@@ -1,14 +1,26 @@
+import java.io.*;
 import java.util.ArrayList;
 
 public class FunctionOfBank {
     private ArrayList<String> userName = new ArrayList<>();
     private ArrayList<Double> deposit = new ArrayList<Double>();
-    //private ArrayList<Double> withdraw = new ArrayList<>();
-    //private ArrayList<Double> transfer = new ArrayList<>();
+
 
     public void register(String userName, double deposit) {
         this.userName.add(userName);
         this.deposit.add(deposit);
+    }
+
+
+    public void dataDisplay () {
+
+        System.out.println("\t\t\t +============================+");
+        System.out.println(" \t\t\t|  JAVA Bank Users Database  |");
+        System.out.println("\t\t\t +============================+");
+
+        for ( int i = 0 ; i < this.userName.size(); i++  ) {
+            System.out.println(( i+1 ) +" " + this.userName.get(i) + " : " + this.deposit.get(i) + " ETB");
+        }
     }
 
     /*
@@ -37,6 +49,7 @@ public class FunctionOfBank {
             }
         }// end of loop
     }// end of func
+
 
 
     // what this fuc will do is when someone withdraw some amount of money from their account
@@ -70,8 +83,8 @@ public class FunctionOfBank {
         /*
             what this function will do is it allow users to transfer from one account to another
             using the  name  of the user they want to transfer money to
-            It takes two usernames sender and resiver and it will take the amount to transer
-            then it will decreas the deposit amount from sender and add it to resiver deposit
+            It takes two usernames sender and receiver, and it will take the amount to transfer
+            then it will decreas the deposit amount from sender and add it to receiver deposit
         */
     public void setTransfer (String sender , String resiver , double transferAmount) {
 
@@ -99,6 +112,79 @@ public class FunctionOfBank {
 
         }// end of for loop
     }
+
+    //  what this function will do is just saving users data on the database
+
+    public void fileSaver ( ) {
+        // first i will create a File that the data will be saved on
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter ( " Java_Bank_DB.txt"));
+             // the file is created, so now we can write the data on that file
+
+            writer.write("\t\t\t +======================+ \n");
+            writer.write(" \t\t\t| Welcome to JAVA Bank | \n" );
+            writer.write("\t\t\t +======================+ \n");
+
+            for (int i=0; i<this.userName.size(); i++ ){
+                writer.write( (i+1) + " " + this.userName.get(i) + " : " + this.deposit.get(i) + " ETB \n");
+            }
+            writer.close();
+
+            // so we this code will save each and evey data on the userName and deposit array
+            // this function have to implemented whn the user exit the program
+
+        }catch (Exception e){
+            System.out.println(" !!! File is not saved ");
+        }
+    }// end of the func
+
+    public void fileSaverForReader ( ) {
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter ( "Bank_Data_To_read_from.txt"));
+
+            for (int i=0; i<this.userName.size(); i++ ){
+                writer.write( this.userName.get(i) + "\n" ) ;
+                writer.write(  String.valueOf(this.deposit.get(i)) + "\n");
+            }
+            writer.close();
+
+        }catch (Exception e){
+            System.out.println(" !!! File is not saved ");
+        }
+    }// end of the function
+
+    // only saving the date is useless we have to read from that data
+
+    public void dataReader () {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("Bank_Data_To_read_from.txt"));
+
+            String line = "one";
+
+            while (line != null) {
+                line  = reader.readLine();
+                int i = 0 ; // index
+                if (line == null ) {
+                 continue;
+                }
+                else {
+                    userName.add(line);
+                   deposit.add(Double.parseDouble(String.valueOf(reader.readLine())));
+                }
+                i++;
+            }
+            reader.close();
+            System.out.println("Data successfully fetched press any letter To Start the program : ");
+
+        } catch (FileNotFoundException e) {
+            System.out.println("The Database is Down ");
+        } catch (IOException e) {
+            System.out.println("ioException");
+        }
+    }
+
+
 }// the end of the class
 
 

@@ -1,0 +1,8 @@
+			 +======================+ 
+ 			| Welcome to JAVA Bank | 
+			 +======================+ 
+1 abdulkerim : 50000.0 ETB 
+2 kiya : 4000.0 ETB 
+3 umir : 51000.0 ETB 
+4 bruk : 355000.0 ETB
+
